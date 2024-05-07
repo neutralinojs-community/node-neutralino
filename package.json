@@ -1,0 +1,37 @@
+{
+  "name": "node-neutralino",
+  "package-name": "node-neutralino",
+  "version": "1.1.3",
+  "description": "wrapper project for neutralinojs backend app",
+  "entry point": "./src/index.js",
+  "main": "./src/index.js",
+  "license": "MIT",
+  "author": {
+    "name": "Neutralinojs and contributors",
+    "email": "neutralinojs@gmail.com",
+    "url": "https://neutralino.js.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neutralinojs-community/node-neutralino.git"
+  },
+  "keywords": [
+    "neutralinojs",
+    "neu",
+    "cross-platform",
+    "framework",
+    "desktop-framework",
+    "lightweight",
+    "cpp",
+    "javascript",
+    "desktop",
+    "webview",
+    "chrome",
+    "browser",
+    "codezri"
+  ],
+  "dependencies": {
+    "uuid": "^9.0.1",
+    "websocket": "^1.0.34"
+  }
+}
