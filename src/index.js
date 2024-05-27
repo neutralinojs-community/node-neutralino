@@ -34,10 +34,8 @@ class NeutralinoApp {
     for (let key in this.windowOptions) {
       if (key == "processArgs") continue;
 
-      let cliKey = key.replace(
-        /[A-Z]|^[a-z]/g,
-        (token) => "-" + token.toLowerCase()
-      );
+      let cliKey = key.replace(/[A-Z]|^[a-z]/g, (token) => "-" + token.toLowerCase());
+      
       outputArgs += ` --window${cliKey}=${this.windowOptions[key]}`;
     }
 
