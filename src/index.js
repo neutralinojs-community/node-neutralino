@@ -1,13 +1,9 @@
-const WS = require("websocket").w3cwebsocket;
-const EventEmitter = require("events");
 const { spawn } = require("child_process");
 const fs = require("fs");
 const path = require("path");
-const { v4: uuidv4 } = require("uuid");
-const constants = require("./constants.js")
-const {getBinaryName, normalize, getAuthInfo, arrayBufferToBase64, base64ToBytesArray} = require("./utils.js");
+const {getBinaryName, normalize} = require("./utils.js");
 
-class NeutralinoApp extends EventEmitter {
+class NeutralinoApp {
   url = "";
   windowOptions = {};
   ws = null;
@@ -54,14 +50,13 @@ class NeutralinoApp extends EventEmitter {
     let binaryName = getBinaryName(arch);
 
     if (!binaryName) {
-      return console.error(
-        `Unsupported platform or CPU architecture: ${process.platform}_${arch}`
-      );
+      return console.error(`Unsupported platform or CPU architecture: ${process.platform}_${arch}`);
     }
 
     let binaryPath = `bin${path.sep}${binaryName}`;
-    let args =
-      " --load-dir-res --path=. --export-auth-info --neu-dev-extension";
+
+    let args = " --load-dir-res --path=. --export-auth-info --neu-dev-extension";
+
     if (outputArgs) args += " " + outputArgs;
 
     if (process.platform == "linux" || process.platform == "darwin")
@@ -74,11 +69,7 @@ class NeutralinoApp extends EventEmitter {
     neuProcess.on("exit", function (code) {
       let statusCodeMsg = code ? `error code ${code}` : `success code 0`;
       let runnerMsg = `${binaryName} was stopped with ${statusCodeMsg}`;
-      if (code) {
-        console.warn(runnerMsg);
-      } else {
-        console.warn(runnerMsg);
-      }
+      console.warn(runnerMsg);
 
       if (this.windowOptions && this.windowOptions.exitProcessOnClose) {
         process.exit(code);
