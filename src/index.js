@@ -13,7 +13,6 @@ class NeutralinoApp {
   offlineMessageQueue = [];
 
   constructor({ url, windowOptions }) {
-    super();
     this.url = url;
     this.windowOptions = windowOptions;
   }
