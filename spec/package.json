@@ -1,0 +1,15 @@
+{
+  "name": "spec",
+  "version": "1.0.0",
+  "description": "Test suite for node-neutralino",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@neutralinojs/neu": "^11.2.0",
+    "mocha": "^10.0.0"
+  }
+}
