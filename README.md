@@ -42,13 +42,6 @@ app.events.on("testEvent", () => {
 #### Backend Support for CLI
 - [ ] support for backend configurations in a neutralino.config.json file to enable automatic execution of backend commands
 
-#### py-neutralino
-- [ ] Create python package simialar to node-neutralino
-
-#### Templates
-- [ ] Create more templates using react, angular, etc.
-
 #### Documentation
 - [ ]  Document all changes, including code refactoring, new APIs, and template enhancement
 - [ ] Provide a guide on writing backend code in different languages to assist developers in creating wrapper packages
-- [ ] Add more projects, templates, and examples to the documentation's resource page
