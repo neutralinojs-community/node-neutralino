@@ -11,6 +11,7 @@ class NeutralinoApp {
   authInfo = null;
   nativeCalls = {};
   offlineMessageQueue = [];
+  neuProcess = null;
 
   constructor({ url, windowOptions }) {
     this.url = url;
@@ -35,7 +36,7 @@ class NeutralinoApp {
 
       let cliKey = key.replace(/[A-Z]|^[a-z]/g, (token) => "-" + token.toLowerCase());
       
-      outputArgs += ` --window${cliKey}=${this.windowOptions[key]}`;
+      outputArgs += ` --window${cliKey}=${normalize(this.windowOptions[key])}`;
     }
 
     if (this.windowOptions && this.windowOptions.processArgs) {
@@ -61,9 +62,9 @@ class NeutralinoApp {
 
     console.log(`Starting process: ${binaryName} ${args}`);
 
-    const neuProcess = spawn(binaryPath, args.split(` `), { stdio: "inherit" });
+    this.neuProcess = spawn(binaryPath, args.split(` `), { stdio: "inherit" });
 
-    neuProcess.on("exit", function (code) {
+    this.neuProcess.on("exit", function (code) {
       let statusCodeMsg = code ? `error code ${code}` : `success code 0`;
       let runnerMsg = `${binaryName} was stopped with ${statusCodeMsg}`;
       console.warn(runnerMsg);
@@ -72,6 +73,12 @@ class NeutralinoApp {
         process.exit(code);
       }
     });
+  }
+
+  close() {
+    if (this.neuProcess) {
+      this.neuProcess.kill();
+    }
   }
 }
 
