@@ -26,11 +26,12 @@ jobs:
     - name: Install dependencies
       working-directory: ./
       run: |
-        npm ci
+        npm install
         
     - name: Install spec dependencies
       working-directory: ./spec
-      run: npm ci
+      run: |
+        npm install
 
     - name: Run spec
       working-directory: ./spec

@@ -5,7 +5,7 @@ const { Writable } = require('stream');
 
 describe('Test NeutralinoApp Class', function () {
   before(() => {
-    run('npx neu create test-app');
+    run('neu create test-app');
     process.chdir('test-app');
   });
 
