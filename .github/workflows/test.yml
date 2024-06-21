@@ -8,31 +8,29 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
-    services:
-      xvfb: # X virtual framebuffer
-        image: selenium/standalone-chrome
-        options: --shm-size 2g
-
+    runs-on: ubuntu-20.04
+    
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v3
 
-    - name: Use Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
+    - name: Install Libraries
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y -f \
+        libgtk-3-dev \
+        libwebkit2gtk-4.0-37 \
+        libwebkit2gtk-4.0-dev \
+        libayatana-appindicator3-1 \
+        xvfb
 
-    - name: Install dependencies
+    - name: Install package dependencies
       working-directory: ./
       run: |
         npm install
-        
-    - name: Install spec dependencies
+
+    - name: Run Spec
       working-directory: ./spec
       run: |
         npm install
-
-    - name: Run spec
-      working-directory: ./spec
-      run: npm run test
+        xvfb-run npm run test
