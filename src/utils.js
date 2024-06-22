@@ -1,4 +1,6 @@
 const constants = require("./constants");
+const fs = require("fs");
+const path = require("path");
 
 function normalize(arg) {
   if (typeof arg != "string") return arg;
@@ -17,10 +19,10 @@ function getBinaryName(arch) {
   return constants.files.binaries[process.platform][arch];
 }
 
-function getAuthInfo() {
+function getAuthInfo(p) {
   let authInfo = null;
   try {
-    authInfo = fs.readFileSync(constants.files.authFile, "utf8");
+    authInfo = fs.readFileSync(path.join(p, constants.files.authFile), "utf8");
     authInfo = JSON.parse(authInfo);
   } catch (err) {
     // ignore
