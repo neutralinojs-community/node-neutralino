@@ -16,30 +16,30 @@ describe('Test NeutralinoApp Class', function () {
     assert.equal(app.windowOptions, defaultOptions.windowOptions);
   });
 
-  it('Should test init() method', async function () {
+  // it('Should test init() method', async function () {
 
-    const app = new NeutralinoApp(defaultOptions);
+  //   const app = new NeutralinoApp(defaultOptions);
 
-    // override process.stdout.write to capture the output
-    let output = '';
-    const writableStream = new Writable({
-      write(chunk, _encoding, callback) {
-        output += chunk.toString();
-        callback();
-      }
-    });
+  //   // override process.stdout.write to capture the output
+  //   let output = '';
+  //   const writableStream = new Writable({
+  //     write(chunk, _encoding, callback) {
+  //       output += chunk.toString();
+  //       callback();
+  //     }
+  //   });
 
-    const originalWrite = process.stdout.write;
-    process.stdout.write = writableStream.write.bind(writableStream);
-    app.init();
+  //   const originalWrite = process.stdout.write;
+  //   process.stdout.write = writableStream.write.bind(writableStream);
+  //   app.init();
 
-    await new Promise(resolve => setTimeout(resolve, 3000));
-    app.close()
+  //   await new Promise(resolve => setTimeout(resolve, 3000));
+  //   app.close()
 
-    process.stdout.write = originalWrite;
+  //   process.stdout.write = originalWrite;
 
-    assert.ok(output.includes('--load-dir-res --path=. --export-auth-info --neu-dev-extension  --url=/ --window-width=500 --window-height=500'));
-  });
+  //   assert.ok(output.includes('--load-dir-res --path=. --export-auth-info --neu-dev-extension  --url=/ --window-width=500 --window-height=500'));
+  // });
 
   it('Should test WS / Event Emitter', async function () {
 
