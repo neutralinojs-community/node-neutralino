@@ -41,7 +41,26 @@ describe('Test NeutralinoApp Class', function () {
     assert.ok(output.includes('--load-dir-res --path=. --export-auth-info --neu-dev-extension  --url=/ --window-width=500 --window-height=500'));
   });
 
-  // We can assert more outputs (authinfo, ws calls response) here after websocket connection has been implemented in the class.
+  it('Should test WS / Event Emitter', async function () {
+
+    const app = new NeutralinoApp(defaultOptions);
+    app.init();
+    
+    const eventPromise = new Promise((resolve, reject) => {
+      // Set a timeout to reject the promise if the event is not emitted
+      const timeout = setTimeout(() => {
+        reject(new Error('Event was not emitted within the expected time'));
+      }, 3000);
+
+      app.on("extClientConnect", (data) => {
+        clearTimeout(timeout);
+        resolve(data);
+      });
+    });
+
+    const eventData = await eventPromise;
+    assert.equal(eventData, 1, "Unable to connect to the Neutralino server");
+  })
 
   after(async () => {
     process.chdir('..');
