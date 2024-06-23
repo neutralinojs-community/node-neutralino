@@ -26,6 +26,11 @@ class NeutralinoApp extends EventEmitter {
 
   init() {
 
+    if (this.ws && this.ws.readyState === this.ws.OPEN){
+      console.info("Already connected to the application.");
+      return;
+    }
+
     this._startWebsocket()
 
     const EXEC_PERMISSION = 0o755;

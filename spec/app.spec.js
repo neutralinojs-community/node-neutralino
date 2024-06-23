@@ -38,7 +38,7 @@ describe('Test NeutralinoApp Class', function () {
 
     process.stdout.write = originalWrite;
 
-    assert.ok(output.includes('--load-dir-res --export-auth-info --neu-dev-extension  --path=./ --window-width=500 --window-height=500'));
+    assert.ok(output.includes('--load-dir-res --export-auth-info --neu-dev-extension  --path=./ --window-width=500 --window-height=500 --window-hidden=true'));
   });
 
   it('Should test WS / Event Emitter', async function () {
@@ -50,7 +50,7 @@ describe('Test NeutralinoApp Class', function () {
       // Set a timeout to reject the promise if the event is not emitted
       const timeout = setTimeout(() => {
         app.close()
-        reject(new Error('extClientConnect Event was not emitted within the expected time'));
+        reject(new Error('Unable to connect to the Neutralino server'));
       }, 3000);
 
       app.on("extClientConnect", (data) => {
