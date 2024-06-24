@@ -35,7 +35,7 @@ class NeutralinoApp extends EventEmitter {
 
     const EXEC_PERMISSION = 0o755;
 
-    let outputArgs = " --path=" + normalize(this.url);
+    let outputArgs = " --url=" + normalize(this.url);
 
     for (let key in this.windowOptions) {
       if (key == "processArgs") continue;
@@ -57,9 +57,9 @@ class NeutralinoApp extends EventEmitter {
       return console.error(`Unsupported platform or CPU architecture: ${process.platform}_${arch}`);
     }
 
-    let binaryPath = path.join(this.url, `bin${path.sep}${binaryName}`);
+    let binaryPath = `bin${path.sep}${binaryName}`;
 
-    let args = " --load-dir-res --export-auth-info --neu-dev-extension";
+    let args = " --load-dir-res --path=. --export-auth-info --neu-dev-extension";
 
     if (outputArgs) args += " " + outputArgs;
 
@@ -92,7 +92,7 @@ class NeutralinoApp extends EventEmitter {
   }
 
   _startWebsocket = () => {
-    this.authInfo = getAuthInfo(this.url);
+    this.authInfo = getAuthInfo();
 
     if (!this.authInfo) {
       this._retryLater();

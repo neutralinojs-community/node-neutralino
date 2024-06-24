@@ -36,11 +36,12 @@ function cleanup() {
 }
 
 const defaultOptions = {
-    url: '.',
+    url: '/',  // <--------
     windowOptions: {
       width: 500,
       height: 500,
-      hidden: true
+      hidden: true,
+      enableInspector: false
     }
 };
 

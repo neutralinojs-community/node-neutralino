@@ -38,7 +38,7 @@ describe('Test NeutralinoApp Class', function () {
 
     process.stdout.write = originalWrite;
 
-    assert.ok(output.includes('--load-dir-res --export-auth-info --neu-dev-extension  --path=. --window-width=500 --window-height=500 --window-hidden=true'));
+    assert.ok(output.includes('--load-dir-res --path=. --export-auth-info --neu-dev-extension  --url=/ --window-width=500 --window-height=500 --window-hidden=true'));
   });
 
   it('Should test WS / Event Emitter', async function () {
