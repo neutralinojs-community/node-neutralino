@@ -1,4 +1,4 @@
-const NeutralinoApp = require("../src/index.js");
+const NeutralinoApp = require('../src/index.js');
 const assert = require('assert');
 const { run, cleanup, defaultOptions } = require('./utils.js');
 const { Writable } = require('stream');
@@ -53,7 +53,7 @@ describe('Test NeutralinoApp Class', function () {
         reject(new Error('Unable to connect to the Neutralino server'));
       }, 3000);
 
-      app.on("extClientConnect", (data) => {
+      app.on('extClientConnect', (data) => {
         clearTimeout(timeout);
         resolve(data);
       });
@@ -62,7 +62,7 @@ describe('Test NeutralinoApp Class', function () {
     const eventData = await eventPromise;
     app.close();
 
-    assert.equal(eventData, "js.neutralino.devtools", "Unable to connect to the Neutralino server");
+    assert.equal(eventData, 'js.neutralino.devtools', 'Unable to connect to the Neutralino server');
   })
 
   after(async () => {

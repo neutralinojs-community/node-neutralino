@@ -123,20 +123,20 @@ class NeutralinoApp extends EventEmitter {
           // Native call response
           if (message.data.error) {
             this.nativeCalls[message.id].reject(message.data.error);
-            if (message.data.error.code == 'NE_RT_INVTOKN') {
+            if (message.data.error.code == "NE_RT_INVTOKN") {
               // Invalid native method token
               this._stopWebsocket();
               console.error("NE_RT_INVTOKN: Neutralinojs application cannot execute native methods since NL_TOKEN is invalid.")
             }
           }
           else if (message.data.success) {
-            this.nativeCalls[message.id].resolve(message.data.hasOwnProperty('returnValue') ? message.data.returnValue : message.data);
+            this.nativeCalls[message.id].resolve(message.data.hasOwnProperty("returnValue") ? message.data.returnValue : message.data);
           }
           delete this.nativeCalls[message.id];
         }
         else if (message.event) {
           // Event from process
-          if (message.event == 'openedFile' && message.data.action == 'dataBinary') {
+          if (message.event == "openedFile" && message.data.action == "dataBinary") {
             message.data.data = base64ToBytesArray(message.data.data);
           }
           this.emit(message.event, message.data);

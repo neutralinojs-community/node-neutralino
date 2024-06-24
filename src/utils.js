@@ -19,10 +19,10 @@ function getBinaryName(arch) {
   return constants.files.binaries[process.platform][arch];
 }
 
-function getAuthInfo(p) {
+function getAuthInfo(pathToRoot) {
   let authInfo = null;
   try {
-    authInfo = fs.readFileSync(path.join(p, constants.files.authFile), "utf8");
+    authInfo = fs.readFileSync(path.join(pathToRoot, constants.files.authFile), "utf8");
     authInfo = JSON.parse(authInfo);
   } catch (err) {
     // ignore
