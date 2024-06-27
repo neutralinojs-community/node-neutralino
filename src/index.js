@@ -7,7 +7,7 @@ const WS = require("websocket").w3cwebsocket;
 const EventEmitter = require("events");
 const { v4: uuidv4 } = require("uuid");
 
-class NeutralinoApp extends EventEmitter {
+class NeutralinoApp {
 
   url = "";
   windowOptions = {};
@@ -21,9 +21,9 @@ class NeutralinoApp extends EventEmitter {
   neuProcess = null;
 
   constructor({ url, windowOptions }) {
-    super();
     this.url = url;
     this.windowOptions = windowOptions;
+    this.events = new EventEmitter();
   }
 
   init() {
@@ -162,7 +162,7 @@ class NeutralinoApp extends EventEmitter {
               })
             }
           }
-          this.emit(message.event, message.data);
+          this.events.emit(message.event, message.data);
         }
       }
     }
@@ -355,7 +355,10 @@ class NeutralinoApp extends EventEmitter {
   events = {
     broadcast: (event, data) => {
       return this._sendMessage('events.broadcast', { event, data });
-    }
+    },
+    on: (event, listener) => {
+      this.events.on(event, listener);
+    },
   };
 
 
