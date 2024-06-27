@@ -65,6 +65,29 @@ describe('Test NeutralinoApp Class', function () {
     assert.equal(eventData, 'js.neutralino.devtools', 'Unable to connect to the Neutralino server');
   })
 
+  it('Should test Neutralino native API\'s', async function () {
+
+    const app = new NeutralinoApp(defaultOptions);
+    app.init();
+    
+    const apiPromise = new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => {
+        app.close()
+        reject(new Error('Unable to execute Neutralino native API\'s'));
+      }, 3000);
+
+      app.getConfig().then((config) => {
+        clearTimeout(timeout);
+        resolve(config);
+      })
+    });
+
+    const eventData = await apiPromise;
+    app.close();
+
+    assert.equal(eventData.applicationId, 'js.neutralino.sample', 'Unable to execute Neutralino native API\'s');
+  })
+
   after(async () => {
     process.chdir('..');
     await cleanup();
