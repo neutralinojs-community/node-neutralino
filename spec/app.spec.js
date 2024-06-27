@@ -53,7 +53,7 @@ describe('Test NeutralinoApp Class', function () {
         reject(new Error('Unable to connect to the Neutralino server'));
       }, 3000);
 
-      app.on('extClientConnect', (data) => {
+      app.events.on('extClientConnect', (data) => {
         clearTimeout(timeout);
         resolve(data);
       });
