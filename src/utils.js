@@ -1,4 +1,5 @@
 const constants = require("./constants");
+const fs = require("fs");
 
 function normalize(arg) {
   if (typeof arg != "string") return arg;

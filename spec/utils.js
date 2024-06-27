@@ -39,9 +39,11 @@ const defaultOptions = {
     url: '/',
     windowOptions: {
       width: 500,
-      height: 500
+      height: 500,
+      hidden: true,
+      enableInspector: false
     }
-  };
+};
 
 module.exports = {
     cleanup,
