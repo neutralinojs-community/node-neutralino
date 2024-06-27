@@ -111,13 +111,19 @@ class NeutralinoApp extends EventEmitter {
     this.ws.onopen = () => {
       console.log("Connected with the application.");
       this._processQueue(this.offlineMessageQueue);
-      this.extensions.getStats().then((stats) => {
-        for (const extensionId of stats.connected) {
-          if (extensionId in this.extensionMessageQueue) {
-            this._processQueue(this.extensionMessageQueue[extensionId]).then(() => {
-              delete this.extensionMessageQueue[extensionId];
-            })
-          }
+      this.getConfig().then((config) => {
+        if(config.enableExtensions){
+          this.extensions.getStats().then((stats) => {
+            for (const extensionId of stats.connected) {
+              if (extensionId in this.extensionMessageQueue) {
+                this._processQueue(this.extensionMessageQueue[extensionId]).then(() => {
+                  delete this.extensionMessageQueue[extensionId];
+                })
+              }
+            }
+          }).catch((err) => {
+            // Ignore
+          })
         }
       })
     };
