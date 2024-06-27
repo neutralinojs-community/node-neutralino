@@ -23,7 +23,7 @@ class NeutralinoApp {
   constructor({ url, windowOptions }) {
     this.url = url;
     this.windowOptions = windowOptions;
-    this.events = new EventEmitter();
+    this.eventEmitter = new EventEmitter();
   }
 
   init() {
@@ -112,7 +112,7 @@ class NeutralinoApp {
       console.log("Connected with the application.");
       this._processQueue(this.offlineMessageQueue);
       this.getConfig().then((config) => {
-        if(config.enableExtensions){
+        if (config.enableExtensions) {
           this.extensions.getStats().then((stats) => {
             for (const extensionId of stats.connected) {
               if (extensionId in this.extensionMessageQueue) {
@@ -162,7 +162,7 @@ class NeutralinoApp {
               })
             }
           }
-          this.events.emit(message.event, message.data);
+          this.eventEmitter.emit(message.event, message.data);
         }
       }
     }
@@ -356,9 +356,22 @@ class NeutralinoApp {
     broadcast: (event, data) => {
       return this._sendMessage('events.broadcast', { event, data });
     },
+
     on: (event, listener) => {
-      this.events.on(event, listener);
+      this.eventEmitter.on(event, listener);
+      return Promise.resolve({
+        success: true,
+        message: 'Event listener added'
+      });
     },
+
+    dispatch: (event, data) => {
+      this.eventEmitter.emit(event, data);
+      return Promise.resolve({
+        success: true,
+        message: 'Message dispatched'
+      });
+    }
   };
 
 
