@@ -7,7 +7,7 @@ const WS = require("websocket").w3cwebsocket;
 const EventEmitter = require("events");
 const { v4: uuidv4 } = require("uuid");
 
-class NeutralinoApp extends EventEmitter {
+class NeutralinoApp {
 
   url = "";
   windowOptions = {};
@@ -21,9 +21,9 @@ class NeutralinoApp extends EventEmitter {
   neuProcess = null;
 
   constructor({ url, windowOptions }) {
-    super();
     this.url = url;
     this.windowOptions = windowOptions;
+    this.eventEmitter = new EventEmitter();
   }
 
   init() {
@@ -112,7 +112,7 @@ class NeutralinoApp extends EventEmitter {
       console.log("Connected with the application.");
       this._processQueue(this.offlineMessageQueue);
       this.getConfig().then((config) => {
-        if(config.enableExtensions){
+        if (config.enableExtensions) {
           this.extensions.getStats().then((stats) => {
             for (const extensionId of stats.connected) {
               if (extensionId in this.extensionMessageQueue) {
@@ -162,7 +162,7 @@ class NeutralinoApp extends EventEmitter {
               })
             }
           }
-          this.emit(message.event, message.data);
+          this.eventEmitter.emit(message.event, message.data);
         }
       }
     }
@@ -355,6 +355,30 @@ class NeutralinoApp extends EventEmitter {
   events = {
     broadcast: (event, data) => {
       return this._sendMessage('events.broadcast', { event, data });
+    },
+
+    on: (event, listener) => {
+      this.eventEmitter.on(event, listener);
+      return Promise.resolve({
+        success: true,
+        message: 'Event listener added'
+      });
+    },
+
+    off: (event, listener) => {
+      this.eventEmitter.off(event, listener);
+      return Promise.resolve({
+        success: true,
+        message: 'Event listener removed'
+      });
+    },
+
+    dispatch: (event, data) => {
+      this.eventEmitter.emit(event, data);
+      return Promise.resolve({
+        success: true,
+        message: 'Message dispatched'
+      });
     }
   };
 
