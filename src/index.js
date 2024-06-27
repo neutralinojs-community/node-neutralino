@@ -229,55 +229,6 @@ class NeutralinoApp {
     });
   };
 
-  _processQueue = async (messageQueue) => {
-    while (messageQueue.length > 0) {
-      const message = messageQueue.shift();
-      try {
-        const response = await this._sendMessage(message.method, message.data);
-        message.resolve(response);
-      }
-      catch (err) {
-        message.reject(err);
-      }
-    }
-  }
-
-  _sendWhenExtReady(extensionId, message) {
-    if (extensionId in this.extensionMessageQueue) {
-      this.extensionMessageQueue[extensionId].push(message);
-    }
-    else {
-      this.extensionMessageQueue[extensionId] = [message];
-    }
-  }
-
-  _sendMessage = (method, data) => {
-    return new Promise((resolve, reject) => {
-      if (!this.ws || this.ws.readyState !== this.ws.OPEN) {
-        this.offlineMessageQueue.push({ method, data, resolve, reject });
-        return;
-      }
-
-      const id = uuidv4();
-
-      this.nativeCalls[id] = { resolve, reject };
-
-      if (!this.authInfo) {
-        console.error("Auth info is not available.");
-        return;
-      }
-
-      this.ws.send(
-        JSON.stringify({
-          id,
-          method,
-          data,
-          accessToken: this.authInfo.nlToken,
-        })
-      );
-    });
-  };
-
   close() {
     this._stopWebsocket();
     if (this.neuProcess) {
