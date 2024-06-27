@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Install Libraries
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y -f \
+        libgtk-3-dev \
+        libwebkit2gtk-4.0-37 \
+        libwebkit2gtk-4.0-dev \
+        libayatana-appindicator3-1 \
+        xvfb
+
+    - name: Install package dependencies
+      working-directory: ./
+      run: |
+        npm install
+
+    - name: Run Spec
+      working-directory: ./spec
+      run: |
+        npm install
+        xvfb-run npm run test

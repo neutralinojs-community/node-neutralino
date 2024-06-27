@@ -10,9 +10,10 @@
     "name": "Viral-Gupta and Neutralinojs community",
     "email": "neutralinojs@gmail.com",
     "url": "https://github.com/neutralinojs-community"
-  },  
+  },
   "license": "MIT",
   "devDependencies": {
+    "@neutralinojs/neu": "^11.2.0",
     "mocha": "^10.0.0"
   }
 }
