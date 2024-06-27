@@ -365,6 +365,14 @@ class NeutralinoApp {
       });
     },
 
+    off: (event, listener) => {
+      this.eventEmitter.off(event, listener);
+      return Promise.resolve({
+        success: true,
+        message: 'Event listener removed'
+      });
+    },
+
     dispatch: (event, data) => {
       this.eventEmitter.emit(event, data);
       return Promise.resolve({
