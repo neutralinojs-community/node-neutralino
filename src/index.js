@@ -112,7 +112,7 @@ class NeutralinoApp extends EventEmitter {
       console.log("Connected with the application.");
       this._processQueue(this.offlineMessageQueue);
       this.getConfig().then((config) => {
-        if(config.enableExtensions){
+        if (config.enableExtensions) {
           this.extensions.getStats().then((stats) => {
             for (const extensionId of stats.connected) {
               if (extensionId in this.extensionMessageQueue) {
@@ -560,6 +560,74 @@ class NeutralinoApp extends EventEmitter {
     }
   };
 
+  updater = {
+    checkForUpdates: (url) => {
+      function isValidManifest(manifest) {
+        if (manifest.applicationId && manifest.applicationId == window.NL_APPID
+          && manifest.version && manifest.resourcesURL) {
+          return true;
+        }
+        return false;
+      }
+
+      return new Promise(async (resolve, reject) => {
+        if (!url) {
+          return reject({
+            code: 'NE_RT_NATRTER',
+            message: 'Missing require parameter: url'
+          });
+        }
+        try {
+          const response = await fetch(url);
+          manifest = JSON.parse(await response.text());
+
+          if (isValidManifest(manifest)) {
+            resolve(manifest);
+          }
+          else {
+            reject({
+              code: 'NE_UP_CUPDMER',
+              message: 'Invalid update manifest or mismatching applicationId'
+            });
+          }
+        }
+        catch (err) {
+          reject({
+            code: 'NE_UP_CUPDERR',
+            message: 'Unable to fetch update manifest'
+          });
+        }
+
+      });
+    },
+
+    install: () => {
+      return new Promise(async (resolve, reject) => {
+        if (!manifest) {
+          return reject({
+            code: 'NE_UP_UPDNOUF',
+            message: 'No update manifest loaded'
+          });
+        }
+        try {
+          const response = await fetch(manifest.resourcesURL);
+          const resourcesBuffer = await response.arrayBuffer();
+          await this.filesystem.writeBinaryFile(window.NL_PATH + "/resources.neu", resourcesBuffer);
+
+          resolve({
+            success: true,
+            message: 'Update installed. Restart the process to see updates'
+          });
+        }
+        catch (err) {
+          reject({
+            code: 'NE_UP_UPDINER',
+            message: 'Update installation error'
+          });
+        }
+      });
+    }
+  }
 
   window = {
     setTitle: (title) => {
