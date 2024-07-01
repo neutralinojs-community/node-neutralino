@@ -1,254 +1,57 @@
 // Types for node-neutralino package
 
-interface ClipboardImage {
-  width: number;
-  height: number;
-  bpp: number;
-  bpr: number;
-  redMask: number;
-  greenMask: number;
-  blueMask: number;
-  redShift: number;
-  greenShift: number;
-  blueShift: number;
-  data: ArrayBuffer;
-}
+import { Manifest } from "./api/updater";
+import {
+  Envs,
+  ExecCommandOptions,
+  ExecCommandResult,
+  FolderDialogOptions,
+  KnownPath,
+  OpenDialogOptions,
+  SaveDialogOptions,
+  SpawnedProcess,
+  TrayOptions,
+} from "./api/os";
+import {
+  CopyOptions,
+  DirectoryEntry,
+  DirectoryReaderOptions,
+  FileReaderOptions,
+  OpenedFile,
+  Stats,
+  Watcher,
+} from "./api/filesystem";
+import { ExtensionStats } from "./api/extensions";
+import {
+  CPUInfo,
+  Display,
+  KernelInfo,
+  MemoryInfo,
+  MousePosition,
+  OSInfo,
+} from "./api/computer";
+import { ClipboardImage } from "./api/clipboard";
+import {
+  WindowOptions,
+  WindowPosOptions,
+  WindowSizeOptions,
+} from "./api/window";
+import {
+  ClipboardFormat,
+  Icon,
+  LoggerType,
+  MessageBoxChoice,
+} from "./enums";
 
-declare enum ClipboardFormat {
-  unknown,
-  text,
-  image,
-}
-
-interface MemoryInfo {
-  physical: {
-    total: number;
-    available: number;
-  };
-  virtual: {
-    total: number;
-    available: number;
-  };
-}
-
-interface KernelInfo {
-  variant: string;
-  version: string;
-}
-
-interface OSInfo {
-  name: string;
-  description: string;
-  version: string;
-}
-
-interface CPUInfo {
-  vendor: string;
-  model: string;
-  frequency: number;
-  architecture: string;
-  logicalThreads: number;
-  physicalCores: number;
-  physicalUnits: number;
-}
-
-interface Display {
-  id: number;
-  resolution: Resolution;
-  dpi: number;
-  bpp: number;
-  refreshRate: number;
-}
-
-interface Resolution {
-  width: number;
-  height: number;
-}
-
-interface MousePosition {
-  x: number;
-  y: number;
-}
-
-declare enum LoggerType {
-  WARNING = "WARNING",
-  ERROR = "ERROR",
-  INFO = "INFO",
-}
-
-interface Response {
-  success: boolean;
-  message: string;
-}
-
-interface ExtensionStats {
-  loaded: string[];
-  connected: string[];
-}
-
-interface DirectoryEntry {
-  entry: string;
-  path: string;
-  type: string;
-}
-
-interface FileReaderOptions {
-  pos: number;
-  size: number;
-}
-
-interface DirectoryReaderOptions {
-  recursive: boolean;
-}
-
-interface OpenedFile {
-  id: number;
-  eof: boolean;
-  pos: number;
-  lastRead: number;
-}
-
-interface Stats {
-  size: number;
-  isFile: boolean;
-  isDirectory: boolean;
-  createdAt: number;
-  modifiedAt: number;
-}
-
-interface Watcher {
-  id: number;
-  path: string;
-}
-
-interface CopyOptions {
-  recursive: boolean;
-  overwrite: boolean;
-  skip: boolean;
-}
-
-interface ExecCommandOptions {
-  stdIn?: string;
-  background?: boolean;
-  cwd?: string;
-}
-
-interface ExecCommandResult {
-  pid: number;
-  stdOut: string;
-  stdErr: string;
-  exitCode: number;
-}
-
-interface SpawnedProcess {
-  id: number;
-  pid: number;
-}
-
-interface Envs {
-  [key: string]: string;
-}
-
-interface OpenDialogOptions {
-  multiSelections?: boolean;
-  filters?: Filter[];
-  defaultPath?: string;
-}
-
-interface FolderDialogOptions {
-  defaultPath?: string;
-}
-
-interface SaveDialogOptions {
-  forceOverwrite?: boolean;
-  filters?: Filter[];
-  defaultPath?: string;
-}
-
-interface Filter {
-  name: string;
-  extensions: string[];
-}
-
-interface TrayOptions {
-  icon: string;
-  menuItems: TrayMenuItem[];
-}
-
-interface TrayMenuItem {
-  id?: string;
-  text: string;
-  isDisabled?: boolean;
-  isChecked?: boolean;
-}
-
-type KnownPath =
-  | "config"
-  | "data"
-  | "cache"
-  | "documents"
-  | "pictures"
-  | "music"
-  | "video"
-  | "downloads"
-  | "savedGames1"
-  | "savedGames2";
-
-declare enum Icon {
-  WARNING = "WARNING",
-  ERROR = "ERROR",
-  INFO = "INFO",
-  QUESTION = "QUESTION",
-}
-
-declare enum MessageBoxChoice {
-  OK = "OK",
-  OK_CANCEL = "OK_CANCEL",
-  YES_NO = "YES_NO",
-  YES_NO_CANCEL = "YES_NO_CANCEL",
-  RETRY_CANCEL = "RETRY_CANCEL",
-  ABORT_RETRY_IGNORE = "ABORT_RETRY_IGNORE",
-}
-
-interface Manifest {
-  applicationId: string;
-  version: string;
-  resourcesURL: string;
-}
-
-interface WindowOptions extends WindowSizeOptions, WindowPosOptions {
-  title?: string;
-  icon?: string;
-  fullScreen?: boolean;
-  alwaysOnTop?: boolean;
-  enableInspector?: boolean;
-  borderless?: boolean;
-  maximize?: boolean;
-  hidden?: boolean;
-  maximizable?: boolean;
-  useSavedState?: boolean;
-  exitProcessOnClose?: boolean;
-  extendUserAgentWith?: string;
-  processArgs?: string;
-}
-
-interface WindowSizeOptions {
-  width?: number;
-  height?: number;
-  minWidth?: number;
-  minHeight?: number;
-  maxWidth?: number;
-  maxHeight?: number;
-  resizable?: boolean;
-}
-
-interface WindowPosOptions {
-  x: number;
-  y: number;
-}
 
 declare class NeutralinoApp {
-  constructor({ url, windowOptions }: { url: string; windowOptions?: WindowOptions; });
+  constructor({
+    url,
+    windowOptions,
+  }: {
+    url: string;
+    windowOptions?: WindowOptions;
+  });
   init(): void;
   close(): void;
 
