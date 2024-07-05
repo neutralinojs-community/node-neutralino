@@ -1,4 +1,4 @@
-# node-neutralion (SerialPort)
+# node-neutralion (SQLite)
 
 The is a template showcasing how to use better-sqlite library using `node-neutralino` package.
 
