@@ -63,7 +63,7 @@ function handlePorts(ports) {
 
 // Function to get list of available serial ports
 function getPorts() {
-    Neutralino.events.dispatch("backend:getPorts");
+    Neutralino.events.broadcast("backend:getPorts");
     Neutralino.events.on("frontend:getPorts", handlePorts);
 }
 

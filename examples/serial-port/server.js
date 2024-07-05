@@ -1,8 +1,8 @@
-const NeutralinoApp = require("../../src/index");
-const SerialPort = require('serialport');
+const NeutralinoApp = require("node-neutralino");
+const { SerialPort } = require('serialport');
 
 const app = new NeutralinoApp({
-  url: "/hello",
+  url: "/",
   windowOptions: {
     enableInspector: false
   }
@@ -10,7 +10,7 @@ const app = new NeutralinoApp({
 
 app.init()
 
-// app.events.on("backend:getPorts",async () => {
-//   const ports = await SerialPort.list()
-//   app.events.dispatch("frontend:getPorts", ports.map(port => port.path))
-// })
+app.events.on("backend:getPorts", async () => {
+  const ports = await SerialPort.list()
+  app.events.broadcast("frontend:getPorts", ports.map(port => port.path))
+})
