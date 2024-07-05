@@ -1,6 +1,8 @@
 # node-neutralion (SerialPort)
 
-The is a template showcasing how to use serialport library using `node-neutralino` package.
+The is a template showcasing how to use better-sqlite library using `node-neutralino` package.
+
+![image](https://github.com/viralgupta/node-neutralino/assets/119971154/be59174c-2c07-4653-8019-9541f7da0dd7)
 
 ## Icon credits
 
