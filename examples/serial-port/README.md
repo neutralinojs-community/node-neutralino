@@ -1,15 +1,15 @@
-# neutralinojs-minimal
+# node-neutralion (SerialPort)
 
-The default template for a Neutralinojs app. It's possible to use your favorite frontend framework by using [these steps](https://neutralino.js.org/docs/getting-started/using-frontend-libraries).
+The is a template showcasing how to use serialport library using `node-neutralino` package.
 
-## Contributors
+## Icon credits
 
-[![Contributors](https://contrib.rocks/image?repo=neutralinojs/neutralinojs-minimal)](https://github.com/neutralinojs/neutralinojs-minimal/graphs/contributors)
+- `trayIcon.png` - Made by [Freepik](https://www.freepik.com) and downloaded from [Flaticon](https://www.flaticon.com)
 
 ## License
 
 [MIT](LICENSE)
 
-## Icon credits
+## Contributors
 
-- `trayIcon.png` - Made by [Freepik](https://www.freepik.com) and downloaded from [Flaticon](https://www.flaticon.com)
+[![Contributors](https://contrib.rocks/image?repo=neutralinojs-community/node-neutralino)](https://github.com/neutralinojs-community/node-neutralino/graphs/contributors)
