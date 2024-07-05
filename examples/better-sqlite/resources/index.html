@@ -8,13 +8,19 @@
   <body>
     <div id="neutralinoapp">
       <h1>NeutralinoJs</h1>
-      <div id="info"></div>
-      <br/>
-      <img src="/icons/logo.gif" alt="Neutralinojs" />
-      <div>
-        <a href="#" onclick="openDocs();">Docs</a> &middot;  
-        <a href="#" onclick="openTutorial();">Video tutorial</a>
-      </div>
+    </div>
+    <h3>Notes</h3>
+    <div id="addNote">
+      <input type="text" id="noteContent" placeholder="Note content" />
+      <button onclick="createNote()">Add Note</button>
+    </div>
+    <div id="notes">
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Content</th>
+        </tr>
+      </table>
     </div>
     <!-- Neutralino.js client. This file is gitignored, 
         because `neu update` typically downloads it.

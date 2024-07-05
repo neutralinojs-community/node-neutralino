@@ -1,20 +1,78 @@
 body {
-    background-color: white;
+  background-color: white;
 }
 
 #neutralinoapp {
-    text-align: center;
-    -webkit-user-select: none;
-    user-select: none;
-    cursor: default;
+  text-align: center;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: default;
 }
 
-#neutralinoapp h1{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 20px;
+#neutralinoapp h1 {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 20px;
 }
 
 #neutralinoapp > div {
-    font-size: 16px;
-    font-weight: normal;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+#info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+tr:nth-child(even) {
+  background-color: #d6eeee;
+}
+
+tr {
+  border-bottom: 1px solid #ddd;
+}
+
+th, td {
+    border: 1px solid black;
+    text-align: left;
+    padding: 8px;
+}
+
+th:first-child, td:first-child {
+    width: 20%;
+}
+th:last-child, td:last-child {
+    width: 80%;
+}
+
+th {
+    text-align: center;
+}
+
+table {
+    width: 100%;
+}
+
+#addNote {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+
+input {
+    padding: 5px;
+    width: 80%;
+    margin: 5px 0;
+}
+
+#addNote button {
+    padding: 5px;
+    width: 15%;
+    margin: 5px 0;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
 }

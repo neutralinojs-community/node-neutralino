@@ -5,9 +5,13 @@
 /bin
 /dist
 
+.github
+.tmp
+
 # Neutralinojs client (minified)
 neutralino.js
 
 # Neutralinojs related files
 .storage
 *.log
+notes.db

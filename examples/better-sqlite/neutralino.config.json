@@ -16,7 +16,8 @@
   "nativeAllowList": [
     "app.*",
     "os.*",
-    "debug.log"
+    "debug.log",
+    "events.*"
   ],
   "globalVariables": {
     "TEST1": "Hello",
@@ -32,7 +33,7 @@
   },
   "modes": {
     "window": {
-      "title": "better-sqlite",
+      "title": "serial-port",
       "width": 800,
       "height": 500,
       "minWidth": 400,
@@ -73,7 +74,7 @@
     }
   },
   "cli": {
-    "binaryName": "better-sqlite",
+    "binaryName": "serial-port",
     "resourcesPath": "/resources/",
     "extensionsPath": "/extensions/",
     "clientLibrary": "/resources/js/neutralino.js",

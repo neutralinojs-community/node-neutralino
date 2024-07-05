@@ -3,33 +3,6 @@
 // Feel free to use any frontend framework you like :)
 // See more details: https://neutralino.js.org/docs/how-to/use-a-frontend-library
 
-/*
-    Function to display information about the Neutralino app.
-    This function updates the content of the 'info' element in the HTML
-    with details regarding the running Neutralino application, including
-    its ID, port, operating system, and version information.
-*/
-function showInfo() {
-    document.getElementById('info').innerHTML = `
-        ${NL_APPID} is running on port ${NL_PORT} inside ${NL_OS}
-        <br/><br/>
-        <span>server: v${NL_VERSION} . client: v${NL_CVERSION}</span>
-        `;
-}
-
-/*
-    Function to open the official Neutralino documentation in the default web browser.
-*/
-function openDocs() {
-    Neutralino.os.open("https://neutralino.js.org/docs");
-}
-
-/*
-    Function to open a tutorial video on Neutralino's official YouTube channel in the default web browser.
-*/
-function openTutorial() {
-    Neutralino.os.open("https://www.youtube.com/c/CodeZri");
-}
 
 /*
     Function to set up a system tray menu with options specific to the window mode.
@@ -83,17 +56,45 @@ function onWindowClose() {
     Neutralino.app.exit();
 }
 
+function handleNotes(notes) {
+    const element = document.querySelector("table");
+    element.innerHTML = ""; // Clear the table
+    if (element) {
+        notes.detail.forEach(note => {
+            const newRow = element.insertRow(); // Create a new row
+            const newCell = newRow.insertCell(); // Create a new cell
+            newCell.textContent = note.id; // Set the cell's text content to the port
+            const newCell2 = newRow.insertCell(); // Create a new cell
+            newCell2.textContent = note.content; // Set the cell's text content to the port
+        });
+    }
+}
+
+// Function to get list of available notes in db
+function fetchNotes() {
+    Neutralino.events.broadcast("backend:getNotes");
+}
+
+function createNote() {
+    const content = document.querySelector("#noteContent").value;
+    Neutralino.events.broadcast("backend:createNote", content);
+    document.querySelector("#noteContent").value = "";
+}
+
 // Initialize Neutralino
 Neutralino.init();
+
+window.onload = function() {
+    fetchNotes();
+}
 
 // Register event listeners
 Neutralino.events.on("trayMenuItemClicked", onTrayMenuItemClicked);
 Neutralino.events.on("windowClose", onWindowClose);
+Neutralino.events.on("frontend:getNotes", handleNotes);
+
 
 // Conditional initialization: Set up system tray if not running on macOS
 if(NL_OS != "Darwin") { // TODO: Fix https://github.com/neutralinojs/neutralinojs/issues/615
     setTray();
 }
-
-// Display app information
-showInfo();
