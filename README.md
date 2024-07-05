@@ -28,10 +28,10 @@ app.events.on("testEvent", () => {
 #### node-neutralino
 - [X] Code Abstraction to Multiple Files
 - [X] Spawn Binaries
-- [ ] Initiate a WS connection with Application
-- [ ] Include Missing Events Api and Online ProcessQueue
-- [ ] Create Type Decleration File
-- [ ] Create Binding Compatible code
+- [X] Initiate a WS connection with Application
+- [X] Include Missing Events Api and Online ProcessQueue
+- [X] Create Type Decleration File
+- [X] Create Binding Compatible code
 - [ ] Publish Package
 
 #### node-neutralino-template
