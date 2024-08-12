@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require("uuid");
 const constants = require("./constants.js");
 const EventEmitter = require("events");
 const fs = require("fs");
-
+const frontendLib = require('./frontendLib.js')
 
 class WebSocketIPC {    
 
@@ -28,7 +28,7 @@ class WebSocketIPC {
     }, 1000);
   }
 
-  startWebsocket = () => {
+  startWebsocket = (frontendLibOptions) => {
     this.authInfo = getAuthInfo();
 
     if (!this.authInfo) {
@@ -45,6 +45,9 @@ class WebSocketIPC {
 
     this.ws.onopen = () => {
       console.log("Connected with the application.");
+      if(frontendLibOptions) {
+        frontendLib.bootstrap(this.authInfo.nlPort, frontendLibOptions);
+    }
       this.processQueue(this.offlineMessageQueue);
       this.sendMessage("app.getConfig").then((config) => {
         if (config.enableExtensions) {
@@ -64,6 +67,9 @@ class WebSocketIPC {
     };
 
     this.ws.onclose = () => {
+      if(frontendLibOptions) {
+        frontendLib.cleanup(frontendLibOptions);
+      }
       console.log("Connection closed.");
     };
 
@@ -165,4 +171,4 @@ class WebSocketIPC {
   };
 }
 
-module.exports =  WebSocketIPC;
+module.exports = WebSocketIPC;

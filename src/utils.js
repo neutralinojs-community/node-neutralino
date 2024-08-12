@@ -52,4 +52,8 @@ function base64ToBytesArray(data) {
   return bytes.buffer;
 }
 
-module.exports = {getBinaryName, normalize, getAuthInfo, arrayBufferToBase64, base64ToBytesArray}
+function trimPath(path) {
+  return path ? path.replace(/^\//, '') : path;
+}
+
+module.exports = {getBinaryName, normalize, getAuthInfo, arrayBufferToBase64, base64ToBytesArray, trimPath}

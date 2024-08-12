@@ -16,6 +16,10 @@ const constants = {
         x64: "neutralino-win_x64.exe"
       }
     },
+  },
+  misc: {
+    hotReloadLibPatchRegex: /(<script.*src=")(.*neutralino.js)(".*><\/script>)/g,
+    hotReloadGlobPatchRegex: /(<script.*src=")(.*__neutralino_globals.js)(".*><\/script>)/g
   }
 };
 

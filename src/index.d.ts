@@ -1,6 +1,6 @@
 // Types for node-neutralino package
 
-import { Manifest } from "./api/updater";
+import { Manifest } from "./types/api/updater";
 import {
   Envs,
   ExecCommandOptions,
@@ -11,7 +11,7 @@ import {
   SaveDialogOptions,
   SpawnedProcess,
   TrayOptions,
-} from "./api/os";
+} from "./types/api/os";
 import {
   CopyOptions,
   DirectoryEntry,
@@ -20,8 +20,8 @@ import {
   OpenedFile,
   Stats,
   Watcher,
-} from "./api/filesystem";
-import { ExtensionStats } from "./api/extensions";
+} from "./types/api/filesystem";
+import { ExtensionStats } from "./types/api/extensions";
 import {
   CPUInfo,
   Display,
@@ -29,19 +29,19 @@ import {
   MemoryInfo,
   MousePosition,
   OSInfo,
-} from "./api/computer";
-import { ClipboardImage } from "./api/clipboard";
+} from "./types/api/computer";
+import { ClipboardImage } from "./types/api/clipboard";
 import {
   WindowOptions,
   WindowPosOptions,
   WindowSizeOptions,
-} from "./api/window";
+} from "./types/api/window";
 import {
   ClipboardFormat,
   Icon,
   LoggerType,
   MessageBoxChoice,
-} from "./enums";
+} from "./types/enums";
 
 
 declare class NeutralinoApp {

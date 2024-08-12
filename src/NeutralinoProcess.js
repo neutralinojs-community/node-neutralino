@@ -2,6 +2,7 @@ const { getBinaryName, normalize } = require("./utils.js");
 const fs = require("fs");
 const path = require("path");
 const { spawn } = require("child_process");
+const frontendLib = require("./frontendLib.js")
 
 class NeutralinoProcess {
   constructor({ url, windowOptions, WebSocketIPC }) {
@@ -11,21 +12,28 @@ class NeutralinoProcess {
     this.neuProcess = null;
   }
 
-  init() {
+  async init() {
 
     if (this.WebSocketIPC.ws && this.WebSocketIPC.ws.readyState === this.WebSocketIPC.ws.OPEN) {
       console.info("Already connected to the application.");
       return;
     }
 
-    this.WebSocketIPC.startWebsocket()
+    const frontendLibOptions = this.windowOptions.frontendLibrary;
+
+    this.WebSocketIPC.startWebsocket(frontendLibOptions);
+
+    if(frontendLibOptions) {
+      frontendLib.runCommand('devCommand', frontendLibOptions);
+      await frontendLib.waitForFrontendLibApp(frontendLibOptions);
+  }
 
     const EXEC_PERMISSION = 0o755;
 
-    let outputArgs = " --url=" + normalize(this.url);
+    let outputArgs = " --url=" + frontendLibOptions && frontendLibOptions.devUrl ? frontendLibOptions.devUrl : normalize(this.url);
 
     for (let key in this.windowOptions) {
-      if (key == "processArgs") continue;
+      if (key == "processArgs" || key == "frontendLibrary") continue;
 
       let cliKey = key.replace(/[A-Z]|^[a-z]/g, (token) => "-" + token.toLowerCase());
 
