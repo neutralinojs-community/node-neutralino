@@ -30,7 +30,12 @@ class NeutralinoProcess {
 
     const EXEC_PERMISSION = 0o755;
 
-    let outputArgs = " --url=" + frontendLibOptions && frontendLibOptions.devUrl ? frontendLibOptions.devUrl : normalize(this.url);
+    let outputArgs = "";
+    if(frontendLibOptions && frontendLibOptions.devUrl){
+      outputArgs += " --url=" + frontendLibOptions.devUrl;
+    } else {
+      outputArgs += " --url=" + normalize(this.url);
+    }
 
     for (let key in this.windowOptions) {
       if (key == "processArgs" || key == "frontendLibrary") continue;
