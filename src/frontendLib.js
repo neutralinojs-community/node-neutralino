@@ -66,9 +66,9 @@ module.exports.bootstrap = async (port, frontendLibOptions) => {
     }
     let globalsUrl = makeGlobalsUrl(port);
     originalGlobals = patchHTMLFile(globalsUrl, HOT_REL_GLOB_PATCH_REGEX, frontendLibOptions);
-    utils.warn('Global variables patch was applied successfully. ' +
+    console.warn('Global variables patch was applied successfully. ' +
         'Please avoid sending keyboard interrupts.');
-    utils.log(`You are working with your frontend library's development environment. ` +
+    console.log(`You are working with your frontend library's development environment. ` +
         'Your frontend-library-based app will run with Neutralino and be able to use the Neutralinojs API.');
 }
 
@@ -79,7 +79,7 @@ module.exports.cleanup = ( frontendLibOptions ) => {
     if(originalGlobals) {
         patchHTMLFile(originalGlobals, HOT_REL_GLOB_PATCH_REGEX, frontendLibOptions);
     }
-    utils.log('Global variables patch was reverted.');
+    console.log('Global variables patch was reverted.');
 }
 
 
@@ -90,10 +90,10 @@ module.exports.runCommand = (commandKey, frontendLibOptions) => {
             let projectPath = trimPath(frontendLibOptions.projectPath);
             let cmd = frontendLibOptions[commandKey];
 
-            utils.log(`Running ${commandKey}: ${cmd}...`);
+            console.log(`Running ${commandKey}: ${cmd}...`);
             const proc = spawnCommand(cmd, { stdio: 'inherit', cwd: projectPath });
             proc.on('exit', (code) => {
-                utils.log(`FrontendLib: ${commandKey} completed with exit code: ${code}`);
+                console.log(`FrontendLib: ${commandKey} completed with exit code: ${code}`);
                 resolve();
             });
         });
@@ -112,7 +112,7 @@ module.exports.waitForFrontendLibApp = async ( frontendLibOptions ) => {
     }
 
     let inter = setInterval(() => {
-        utils.log(`App will be launched when ${devUrlString} on port ${port} is ready...`);
+        console.log(`App will be launched when ${devUrlString} on port ${port} is ready...`);
     }, 2500);
 
     try {
