@@ -56,4 +56,8 @@ function trimPath(path) {
   return path ? path.replace(/^\//, '') : path;
 }
 
-module.exports = {getBinaryName, normalize, getAuthInfo, arrayBufferToBase64, base64ToBytesArray, trimPath}
+function inBuildMode(){
+  return fs.existsSync("bin/resources.neu")
+}
+
+module.exports = {getBinaryName, normalize, getAuthInfo, arrayBufferToBase64, base64ToBytesArray, trimPath, inBuildMode}

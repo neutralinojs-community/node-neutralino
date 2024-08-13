@@ -1,4 +1,4 @@
-const { getBinaryName, normalize } = require("./utils.js");
+const { getBinaryName, normalize, inBuildMode } = require("./utils.js");
 const fs = require("fs");
 const path = require("path");
 const { spawn } = require("child_process");
@@ -23,7 +23,7 @@ class NeutralinoProcess {
 
     this.WebSocketIPC.startWebsocket(frontendLibOptions);
 
-    if(frontendLibOptions) {
+    if(frontendLibOptions && !inBuildMode()) {
       frontendLib.runCommand('devCommand', frontendLibOptions);
       await frontendLib.waitForFrontendLibApp(frontendLibOptions);
   }
@@ -31,10 +31,12 @@ class NeutralinoProcess {
     const EXEC_PERMISSION = 0o755;
 
     let outputArgs = "";
-    if(frontendLibOptions && frontendLibOptions.devUrl){
-      outputArgs += " --url=" + frontendLibOptions.devUrl;
-    } else {
-      outputArgs += " --url=" + normalize(this.url);
+    if(!inBuildMode()){
+      if(frontendLibOptions && frontendLibOptions.devUrl){
+        outputArgs += " --url=" + frontendLibOptions.devUrl;
+      } else {
+        outputArgs += " --url=" + normalize(this.url);
+      }
     }
 
     for (let key in this.windowOptions) {
@@ -59,7 +61,7 @@ class NeutralinoProcess {
 
     let binaryPath = `bin${path.sep}${binaryName}`;
 
-    let args = " --load-dir-res --path=. --export-auth-info --neu-dev-extension";
+    let args = `${inBuildMode() ? "" : " --load-dir-res --path=."} --export-auth-info --neu-dev-extension`;
 
     if (outputArgs) args += " " + outputArgs;
 

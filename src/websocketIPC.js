@@ -1,4 +1,4 @@
-const { getAuthInfo, base64ToBytesArray } = require("./utils.js");
+const { getAuthInfo, base64ToBytesArray, inBuildMode } = require("./utils.js");
 const WS = require("websocket").w3cwebsocket;
 const { v4: uuidv4 } = require("uuid");
 const constants = require("./constants.js");
@@ -45,7 +45,7 @@ class WebSocketIPC {
 
     this.ws.onopen = () => {
       console.log("Connected with the application.");
-      if(frontendLibOptions) {
+      if(frontendLibOptions && !inBuildMode()) {
         frontendLib.bootstrap(this.authInfo.nlPort, frontendLibOptions);
     }
       this.processQueue(this.offlineMessageQueue);
@@ -67,7 +67,7 @@ class WebSocketIPC {
     };
 
     this.ws.onclose = () => {
-      if(frontendLibOptions) {
+      if(frontendLibOptions && !inBuildMode()) {
         frontendLib.cleanup(frontendLibOptions);
       }
       console.log("Connection closed.");
