@@ -21,7 +21,7 @@ function getBinaryName(arch) {
 function getAuthInfo() {
   let authInfo = null;
   try {
-    authInfo = fs.readFileSync(constants.files.authFile, "utf8");
+    authInfo = fs.readFileSync(inBuildMode() ? constants.files.buildAuthFile : constants.files.authFile, "utf8");
     authInfo = JSON.parse(authInfo);
   } catch (err) {
     // ignore

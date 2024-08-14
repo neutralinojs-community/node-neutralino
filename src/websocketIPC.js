@@ -30,7 +30,7 @@ class WebSocketIPC {
     this.authInfo = getAuthInfo();
 
     if (!this.authInfo) {
-      this.retryLater();
+      this.retryLater(frontendLibOptions);
       return;
     }
 

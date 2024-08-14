@@ -1,6 +1,7 @@
 const constants = {
   files: {
     authFile: ".tmp/auth_info.json",
+    buildAuthFile: "bin/.tmp/auth_info.json",
     binaries: {
       linux: {
         x64: "neutralino-linux_x64",
