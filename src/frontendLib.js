@@ -119,7 +119,7 @@ module.exports.waitForFrontendLibApp = async ( frontendLibOptions ) => {
         await tpu.waitUntilUsedOnHost(port, url.hostname, 200, timeout);
     }
     catch(e) {
-        utils.error(`Timeout exceeded while waiting till local TCP port: ${port}`);
+        console.error(`Timeout exceeded while waiting till local TCP port: ${port}`);
         process.exit(1);
     }
     clearInterval(inter);

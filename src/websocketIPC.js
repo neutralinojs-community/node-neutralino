@@ -11,7 +11,7 @@ class WebSocketIPC {
   constructor() {
 
     this.authInfo = null;
-    this.reconnecting = false;
+    this.wsConnected = false;
     this.retryHandler = null;
     this.ws = null;
     this.nativeCalls = {};
@@ -20,11 +20,9 @@ class WebSocketIPC {
     this.eventEmitter = new EventEmitter();
   }
 
-  retryLater() {
-    this.reconnecting = true;
+  retryLater(frontendLibOptions) {
     this.retryHandler = setTimeout(() => {
-      this.reconnecting = false;
-      this.startWebsocket();
+      this.startWebsocket(frontendLibOptions);
     }, 1000);
   }
 
@@ -39,11 +37,12 @@ class WebSocketIPC {
     this.ws = new WS(`ws://127.0.0.1:${this.authInfo.nlPort}?extensionId=js.neutralino.devtools&connectToken=${this.authInfo.nlConnectToken}`);
 
     this.ws.onerror = () => {
-      this.retryLater();
+      this.retryLater(frontendLibOptions);
       return;
     };
 
     this.ws.onopen = () => {
+      this.wsConnected = true;
       console.log("Connected with the application.");
       if(frontendLibOptions && !inBuildMode()) {
         frontendLib.bootstrap(this.authInfo.nlPort, frontendLibOptions);
@@ -67,6 +66,9 @@ class WebSocketIPC {
     };
 
     this.ws.onclose = () => {
+      if(this.wsConnected == false) return;
+      this.wsConnected = false;
+
       if(frontendLibOptions && !inBuildMode()) {
         frontendLib.cleanup(frontendLibOptions);
       }
