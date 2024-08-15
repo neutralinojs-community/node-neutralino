@@ -34,7 +34,7 @@ class WebSocketIPC {
       return;
     }
 
-    this.ws = new WS(`ws://127.0.0.1:${this.authInfo.nlPort}?extensionId=js.neutralino.devtools&connectToken=${this.authInfo.nlConnectToken}`);
+    this.ws = new WS(`ws://127.0.0.1:${this.authInfo.nlPort}?extensionId=js.node-neutralino.projectRunner&connectToken=${this.authInfo.nlConnectToken}`);
 
     this.ws.onerror = () => {
       this.retryLater(frontendLibOptions);
@@ -80,7 +80,7 @@ class WebSocketIPC {
         const message = JSON.parse(e.data);
         if (message.id && message.id in this.nativeCalls) {
           // Native call response
-          if (message.data.error) {
+          if (message.data && message.data.error) {
             this.nativeCalls[message.id].reject(message.data.error);
             if (message.data.error.code == "NE_RT_INVTOKN") {
               // Invalid native method token
