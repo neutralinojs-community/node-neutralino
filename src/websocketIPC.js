@@ -34,7 +34,7 @@ class WebSocketIPC {
       return;
     }
 
-    this.ws = new WS(`ws://127.0.0.1:${this.authInfo.nlPort}?extensionId=js.node-neutralino.projectRunner&connectToken=${this.authInfo.nlConnectToken}`);
+    this.ws = new WS(`ws://127.0.0.1:${this.authInfo.nlPort}?extensionId=${inBuildMode() ? "js.node-neutralino.projectRunner" : "js.neutralino.devtools"}&connectToken=${this.authInfo.nlConnectToken}`);
 
     this.ws.onerror = () => {
       this.retryLater(frontendLibOptions);

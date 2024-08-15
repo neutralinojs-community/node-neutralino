@@ -61,7 +61,7 @@ class NeutralinoProcess {
 
     let binaryPath = `bin${path.sep}${binaryName}`;
 
-    let args = `${inBuildMode() ? "" : " --load-dir-res --path=."} --export-auth-info --enable-extensions=true`;
+    let args = `${inBuildMode() ? "" : " --load-dir-res --path=. --neu-dev-extension"} --export-auth-info --enable-extensions=true`;
 
     if (outputArgs) args += " " + outputArgs;
 
