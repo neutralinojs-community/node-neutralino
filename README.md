@@ -1,6 +1,6 @@
 # Node Neutralino
 
-[<img src="media/neutralino-logo.png" align="right" width="100">](https://neutralino.js.org)
+[<img src="https://github.com/user-attachments/assets/379553c3-bf97-43c9-8a7f-b338e0cdd9cf" align="right" width="100">](https://github.com/user-attachments/assets/379553c3-bf97-43c9-8a7f-b338e0cdd9cf)
 
 Node Neutralino is a NPM package that lets you write backend code for your [Neutralinojs](https://neutralino.js.org) Apps, It supports Vanilla JS as well as Frontend Frameworks.
 
