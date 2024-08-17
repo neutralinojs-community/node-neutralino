@@ -6,7 +6,7 @@ Node Neutralino is a NPM package that lets you write backend code for your [Neut
 
 ---
 
-You could manually add Node Neutralino to your projects or Get started with one of the premade templates!
+You could manually add Node Neutralino to your projects or get started with one of the premade templates!
 
 Templates:
 - [Vanilla JS](https://github.com/neutralinojs-community/node-neutralino-vanilla)
@@ -14,7 +14,7 @@ Templates:
 
 ### Example Usage:
 
-- #### Using Templates
+#### Using Templates
 
 ```bash
 # Use neutralinojs-community/node-neutralino-vanilla for Vanilla JS template
@@ -27,67 +27,67 @@ $ neu run
 # Build Neu App
 $ neu build --clean
 ```
-- #### Manual Instructions
+#### Manual Instructions
 
-> - Add `node-neutralino` as npm dependency in root of your NEU App.
-> ```bash
-> $ npm i node-neutralino
-> ```
-> 
-> - Add config in `neutralino.config.json` for projectRunner
-> ```json
-> // This is required since node-neutralino communicates via neutralinojs extension protocol.
-> "enableExtensions": true,
-> "extensions": [
->   {
->       "id": "js.node-neutralino.projectRunner"
->   }
-> ]
-> 
-> // Add projectRunner Config
-> "cli": {
->   "projectRunner": {
->     "projectPath": "/", // initCommand, devCommand, buildCommand will run in this folder
->     "buildPath": "./node-src/dist/", // Location where built backend file(s) need to be located after buildCommand
->     "initCommand": "npm install", // (optional) This command is executed when app is created from a template repo with neu create
->     "devCommand": "tsx ./server.ts", // (optional) This command is executed when app is opened in dev mode to run the projectRunner File
->     "buildCommand": "tsc" // (optional) This command is executed when app is being built, developers are responsible to make sure that built backend files are located in projectRunner.buildPath after executing this command.
->   }
-> }
-> ```
-> - Create backend file that imports `node-neutralino` package and initializes the Neu app.
-> Example:
-> ```js
-> // server.ts
-> import NeutralinoApp from "node-neutralino"
-> 
-> async function main() {
->   const app = new NeutralinoApp({
->     url: "/",
->     windowOptions: {
->       enableInspector: false,
->     }
->   });
-> 
->   app.init();
-> 
->   app.events.on("backend.maximize", () => {
->     app.window.maximize()
->   })
-> }
-> 
-> main();
-> ```
-> - Now you can run/build the Neu app with neu-cli commands easily.
-> ```bash
-> # To run the app
-> $ neu run
-> 
-> # To build the app
-> $ neu build --clean
-> ```
-> <br>
+ - Add `node-neutralino` as npm dependency in root of your NEU App.
+ ```bash
+ $ npm i node-neutralino
+ ```
+ 
+ - Add the following config in `neutralino.config.json` for projectRunner.
+ ```js
+ // This is required since node-neutralino communicates via neutralinojs extension protocol.
+ "enableExtensions": true,
+ "extensions": [
+   {
+       "id": "js.node-neutralino.projectRunner"
+   }
+ ]
+ 
+ // Add projectRunner Config
+ "cli": {
+   "projectRunner": {
+     "projectPath": "/", // initCommand, devCommand, buildCommand will run in this folder
+     "buildPath": "./node-src/dist/", // Location where built backend file(s) need to be located after buildCommand
+     "initCommand": "npm install", // (optional) This command is executed when app is created from a template repo with neu create
+     "devCommand": "tsx ./server.ts", // (optional) This command is executed when app is opened in dev mode to run the projectRunner File
+     "buildCommand": "tsc" // (optional) This command is executed when app is being built, developers are responsible to make sure that built backend files are located in projectRunner.buildPath after executing this command.
+   }
+ }
+ ```
+ - Create backend file that imports `node-neutralino` package and initializes the Neu app.
+ Example:
+ ```js
+ // server.ts
+ import NeutralinoApp from "node-neutralino"
+ 
+ async function main() {
+   const app = new NeutralinoApp({
+     url: "/",
+     windowOptions: {
+       enableInspector: false,
+     }
+   });
+ 
+   app.init();
+ 
+   app.events.on("backend.maximize", () => {
+     app.window.maximize();
+   });
+ }
+ 
+ main();
+ ```
+ - Now you can run/build the Neu app with neu-cli commands easily.
+ ```bash
+ # To run the app
+ $ neu run
+ 
+ # To build the app
+ $ neu build --clean
+ ```
 
+---
 
 ### NeutralinoApp Configuration Options
 
@@ -133,7 +133,7 @@ $ neu build --clean
 #### windowOptions.processArgs
 - (String) Additional command-line arguments for the new window process. Check all supported internal command-line arguments from [here](https://neutralino.js.org/docs/cli/internal-cli-arguments)
 
-> ##### Read more about working with frontend library and config [here](https://neutralino.js.org/docs/getting-started/using-frontend-libraries#enabling-hot-reload-and-configuration)
+***Read more about working with frontend library and config [here](https://neutralino.js.org/docs/getting-started/using-frontend-libraries#enabling-hot-reload-and-configuration)***
 
 #### windowOptions.frontendLibrary.patchFile
 - [String] Location for HTML file for HRM (hot module replacement)
@@ -166,7 +166,7 @@ $ neu build --clean
 - This is a guide to show you how you can create similar package like `node-neutralino` in any language, eg: `py-neutralino`, `rust-neutralino`, etc.
 - Steps:
 - 1st Step (Spawning Neutralino Binaries With Process Args):
-  - Take input from users for all the [supported args](https://github.com/neutralinojs-community/node-neutralino/blob/main/types/api/window.ts).
+  - Take input from users for all the [supported args](https://github.com/neutralinojs-community/node-neutralino/blob/5c84f79cf12afdce2b5ad86919817e43dd907989/src/types/api/window.ts#L3).
   - Spawn Binaries with given args by converting from object to string.
 - 2nd Step (Connect To Neutralino Server):
   - To communicate with the spawed app you can connect with the internal server through WebSockets.
