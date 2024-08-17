@@ -1,17 +1,17 @@
-const { getAuthInfo, base64ToBytesArray } = require("./utils.js");
+const { getAuthInfo, base64ToBytesArray, inBuildMode } = require("./utils.js");
 const WS = require("websocket").w3cwebsocket;
 const { v4: uuidv4 } = require("uuid");
 const constants = require("./constants.js");
 const EventEmitter = require("events");
 const fs = require("fs");
-
+const frontendLib = require('./frontendLib.js')
 
 class WebSocketIPC {    
 
   constructor() {
 
     this.authInfo = null;
-    this.reconnecting = false;
+    this.wsConnected = false;
     this.retryHandler = null;
     this.ws = null;
     this.nativeCalls = {};
@@ -20,31 +20,33 @@ class WebSocketIPC {
     this.eventEmitter = new EventEmitter();
   }
 
-  retryLater() {
-    this.reconnecting = true;
+  retryLater(frontendLibOptions) {
     this.retryHandler = setTimeout(() => {
-      this.reconnecting = false;
-      this.startWebsocket();
+      this.startWebsocket(frontendLibOptions);
     }, 1000);
   }
 
-  startWebsocket = () => {
+  startWebsocket = (frontendLibOptions) => {
     this.authInfo = getAuthInfo();
 
     if (!this.authInfo) {
-      this.retryLater();
+      this.retryLater(frontendLibOptions);
       return;
     }
 
-    this.ws = new WS(`ws://127.0.0.1:${this.authInfo.nlPort}?extensionId=js.neutralino.devtools&connectToken=${this.authInfo.nlConnectToken}`);
+    this.ws = new WS(`ws://127.0.0.1:${this.authInfo.nlPort}?extensionId=${inBuildMode() ? "js.node-neutralino.projectRunner" : "js.neutralino.devtools"}&connectToken=${this.authInfo.nlConnectToken}`);
 
     this.ws.onerror = () => {
-      this.retryLater();
+      this.retryLater(frontendLibOptions);
       return;
     };
 
     this.ws.onopen = () => {
+      this.wsConnected = true;
       console.log("Connected with the application.");
+      if(frontendLibOptions && !inBuildMode()) {
+        frontendLib.bootstrap(this.authInfo.nlPort, frontendLibOptions);
+    }
       this.processQueue(this.offlineMessageQueue);
       this.sendMessage("app.getConfig").then((config) => {
         if (config.enableExtensions) {
@@ -64,6 +66,12 @@ class WebSocketIPC {
     };
 
     this.ws.onclose = () => {
+      if(this.wsConnected == false) return;
+      this.wsConnected = false;
+
+      if(frontendLibOptions && !inBuildMode()) {
+        frontendLib.cleanup(frontendLibOptions);
+      }
       console.log("Connection closed.");
     };
 
@@ -72,7 +80,7 @@ class WebSocketIPC {
         const message = JSON.parse(e.data);
         if (message.id && message.id in this.nativeCalls) {
           // Native call response
-          if (message.data.error) {
+          if (message.data && message.data.error) {
             this.nativeCalls[message.id].reject(message.data.error);
             if (message.data.error.code == "NE_RT_INVTOKN") {
               // Invalid native method token
@@ -165,4 +173,4 @@ class WebSocketIPC {
   };
 }
 
-module.exports =  WebSocketIPC;
+module.exports = WebSocketIPC;

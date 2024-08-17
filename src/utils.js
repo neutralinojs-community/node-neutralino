@@ -21,7 +21,7 @@ function getBinaryName(arch) {
 function getAuthInfo() {
   let authInfo = null;
   try {
-    authInfo = fs.readFileSync(constants.files.authFile, "utf8");
+    authInfo = fs.readFileSync(inBuildMode() ? constants.files.buildAuthFile : constants.files.authFile, "utf8");
     authInfo = JSON.parse(authInfo);
   } catch (err) {
     // ignore
@@ -52,4 +52,12 @@ function base64ToBytesArray(data) {
   return bytes.buffer;
 }
 
-module.exports = {getBinaryName, normalize, getAuthInfo, arrayBufferToBase64, base64ToBytesArray}
+function trimPath(path) {
+  return path ? path.replace(/^\//, '') : path;
+}
+
+function inBuildMode(){
+  return fs.existsSync("bin/resources.neu")
+}
+
+module.exports = {getBinaryName, normalize, getAuthInfo, arrayBufferToBase64, base64ToBytesArray, trimPath, inBuildMode}

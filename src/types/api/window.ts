@@ -1,3 +1,5 @@
+import type { frontendLibOptions } from "./frontendLib"
+
 export interface WindowOptions extends WindowSizeOptions, WindowPosOptions {
     title?: string;
     icon?: string;
@@ -12,6 +14,7 @@ export interface WindowOptions extends WindowSizeOptions, WindowPosOptions {
     exitProcessOnClose?: boolean;
     extendUserAgentWith?: string;
     processArgs?: string;
+    frontendLibrary?: frontendLibOptions
   }
   
   export interface WindowSizeOptions {
@@ -25,6 +28,6 @@ export interface WindowOptions extends WindowSizeOptions, WindowPosOptions {
   }
   
   export interface WindowPosOptions {
-    x: number;
-    y: number;
+    x?: number;
+    y?: number;
   }

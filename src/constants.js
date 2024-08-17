@@ -1,6 +1,7 @@
 const constants = {
   files: {
     authFile: ".tmp/auth_info.json",
+    buildAuthFile: "bin/.tmp/auth_info.json",
     binaries: {
       linux: {
         x64: "neutralino-linux_x64",
@@ -16,6 +17,10 @@ const constants = {
         x64: "neutralino-win_x64.exe"
       }
     },
+  },
+  misc: {
+    hotReloadLibPatchRegex: /(<script.*src=")(.*neutralino.js)(".*><\/script>)/g,
+    hotReloadGlobPatchRegex: /(<script.*src=")(.*__neutralino_globals.js)(".*><\/script>)/g
   }
 };
 
