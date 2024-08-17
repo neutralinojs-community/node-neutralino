@@ -5,7 +5,6 @@
   "description": "Wrapper project for Neutralinojs backend",
   "entry point": "./src/index.js",
   "main": "./src/index.js",
-  "types": "./types/index.d.ts",
   "license": "MIT",
   "author": {
     "name": "Viral-Gupta and Neutralinojs community",
@@ -31,6 +30,9 @@
     "browser"
   ],
   "dependencies": {
+    "recursive-readdir": "^2.2.3",
+    "spawn-command": "^0.0.3",
+    "tcp-port-used": "^1.0.2",
     "uuid": "^9.0.1",
     "websocket": "^1.0.34"
   }

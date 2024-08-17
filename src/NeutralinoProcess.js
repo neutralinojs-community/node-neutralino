@@ -1,7 +1,8 @@
-const { getBinaryName, normalize } = require("./utils.js");
+const { getBinaryName, normalize, inBuildMode } = require("./utils.js");
 const fs = require("fs");
 const path = require("path");
 const { spawn } = require("child_process");
+const frontendLib = require("./frontendLib.js")
 
 class NeutralinoProcess {
   constructor({ url, windowOptions, WebSocketIPC }) {
@@ -11,21 +12,35 @@ class NeutralinoProcess {
     this.neuProcess = null;
   }
 
-  init() {
+  async init() {
 
     if (this.WebSocketIPC.ws && this.WebSocketIPC.ws.readyState === this.WebSocketIPC.ws.OPEN) {
       console.info("Already connected to the application.");
       return;
     }
 
-    this.WebSocketIPC.startWebsocket()
+    const frontendLibOptions = this.windowOptions.frontendLibrary;
+
+    this.WebSocketIPC.startWebsocket(frontendLibOptions);
+
+    if(frontendLibOptions && !inBuildMode()) {
+      frontendLib.runCommand('devCommand', frontendLibOptions);
+      await frontendLib.waitForFrontendLibApp(frontendLibOptions);
+  }
 
     const EXEC_PERMISSION = 0o755;
 
-    let outputArgs = " --url=" + normalize(this.url);
+    let outputArgs = "";
+    if(!inBuildMode()){
+      if(frontendLibOptions && frontendLibOptions.devUrl){
+        outputArgs += " --url=" + frontendLibOptions.devUrl;
+      } else {
+        outputArgs += " --url=" + normalize(this.url);
+      }
+    }
 
     for (let key in this.windowOptions) {
-      if (key == "processArgs") continue;
+      if (key == "processArgs" || key == "frontendLibrary") continue;
 
       let cliKey = key.replace(/[A-Z]|^[a-z]/g, (token) => "-" + token.toLowerCase());
 
@@ -46,7 +61,7 @@ class NeutralinoProcess {
 
     let binaryPath = `bin${path.sep}${binaryName}`;
 
-    let args = " --load-dir-res --path=. --export-auth-info --neu-dev-extension";
+    let args = `${inBuildMode() ? "" : " --load-dir-res --path=. --neu-dev-extension"} --export-auth-info --enable-extensions=true`;
 
     if (outputArgs) args += " " + outputArgs;
 
