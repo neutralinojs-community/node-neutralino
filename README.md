@@ -1,10 +1,42 @@
+[<img src="https://github.com/user-attachments/assets/379553c3-bf97-43c9-8a7f-b338e0cdd9cf" align="right" width="150" height="150" style={{}}>](https://github.com/user-attachments/assets/379553c3-bf97-43c9-8a7f-b338e0cdd9cf)
 # Node Neutralino
 
-[<img src="https://github.com/user-attachments/assets/379553c3-bf97-43c9-8a7f-b338e0cdd9cf" align="right" width="100">](https://github.com/user-attachments/assets/379553c3-bf97-43c9-8a7f-b338e0cdd9cf)
-
-Node Neutralino is a NPM package that lets you write backend code for your [Neutralinojs](https://neutralino.js.org) Apps, It supports Vanilla JS as well as Frontend Frameworks.
+Node Neutralino is a NPM Package that lets you write backend code for your [Neutralinojs](https://neutralino.js.org) apps, It supports Vanilla JS as well as frontend frameworks.
 
 ---
+
+## Table Of Content
+  - [Getting Started](#getting-started)
+    - [Using Templates](#using-templates)
+    - [Manual Installation](#manual-installation)
+  - [NeutralinoApp Configuration Options](#neutralinoapp-configuration-options)
+    - [url](#url)
+    - [windowOptions.title](#windowoptionstitle)
+    - [windowOptions.icon](#windowoptionsicon)
+    - [windowOptions.fullScreen](#windowoptionsfullscreen)
+    - [windowOptions.alwaysOnTop](#windowoptionsalwaysontop)
+    - [windowOptions.enableInspector](#windowoptionsenableinspector)
+    - [windowOptions.borderless](#windowoptionsborderless)
+    - [windowOptions.maximize](#windowoptionsmaximize)
+    - [windowOptions.hidden](#windowoptionshidden)
+    - [windowOptions.maximizable](#windowoptionsmaximizable)
+    - [windowOptions.useSavedState](#windowoptionsusesavedstate)
+    - [windowOptions.exitProcessOnClose](#windowoptionsexitprocessonclose)
+    - [windowOptions.extendUserAgentWith](#windowoptionsextenduseragentwith)
+    - [windowOptions.processArgs](#windowoptionsprocessargs)
+    - [windowOptions.frontendLibrary.patchFile](#windowoptionsfrontendlibrarypatchfile)
+    - [windowOptions.frontendLibrary.devUrl](#windowoptionsfrontendlibrarydevurl)
+    - [windowOptions.frontendLibrary.clientLibrary](#windowoptionsfrontendlibraryclientlibrary)
+    - [windowOptions.frontendLibrary.resourcesPath](#windowoptionsfrontendlibraryresourcespath)
+    - [windowOptions.frontendLibrary.documentRoot](#windowoptionsfrontendlibrarydocumentroot)
+    - [windowOptions.frontendLibrary.projectPath](#windowoptionsfrontendlibraryprojectpath)
+    - [windowOptions.frontendLibrary.devCommand](#windowoptionsfrontendlibrarydevcommand)
+    - [windowOptions.frontendLibrary.waitTimeout](#windowoptionsfrontendlibrarywaittimeout)
+  - [Create your own Project Runner in any language](#create-your-own-project-runner-in-any-language)
+
+---
+
+### Getting Started
 
 You could manually add Node Neutralino to your projects or get started with one of the premade templates!
 
@@ -12,9 +44,7 @@ Templates:
 - [Vanilla JS](https://github.com/neutralinojs-community/node-neutralino-vanilla)
 - [Vite + React.js + TS](https://github.com/neutralinojs-community/node-neutralino-react)
 
-### Example Usage:
-
-#### Using Templates
+#### Using Templates:
 
 ```bash
 # Use neutralinojs-community/node-neutralino-vanilla for Vanilla JS template
@@ -27,7 +57,7 @@ $ neu run
 # Build Neu App
 $ neu build --clean
 ```
-#### Manual Instructions
+#### Manual Installation:
 
  - Add `node-neutralino` as npm dependency in root of your NEU App.
  ```bash
@@ -78,7 +108,7 @@ $ neu build --clean
  
  main();
  ```
- - Now you can run/build the Neu app with neu-cli commands easily.
+ - Now you can run/build the Neu app with [neu-cli](https://neutralino.js.org/docs/cli/neu-cli) easily.
  ```bash
  # To run the app
  $ neu run
@@ -133,7 +163,7 @@ $ neu build --clean
 #### windowOptions.processArgs
 - (String) Additional command-line arguments for the new window process. Check all supported internal command-line arguments from [here](https://neutralino.js.org/docs/cli/internal-cli-arguments)
 
-***Read more about working with frontend library and config [here](https://neutralino.js.org/docs/getting-started/using-frontend-libraries#enabling-hot-reload-and-configuration)***
+***Read more about working with frontend library and config [here](https://neutralino.js.org/docs/getting-started/using-frontend-libraries#enabling-hot-reload-and-configuration)***.
 
 #### windowOptions.frontendLibrary.patchFile
 - [String] Location for HTML file for HRM (hot module replacement)
@@ -161,7 +191,7 @@ $ neu build --clean
 
 --- 
 
-### Steps to create your own Project Runner in any language
+### Create your own Project Runner in any language
 
 - This is a guide to show you how you can create similar package like `node-neutralino` in any language, eg: `py-neutralino`, `rust-neutralino`, etc.
 - Steps:
