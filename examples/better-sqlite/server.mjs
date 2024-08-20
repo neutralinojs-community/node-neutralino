@@ -1,10 +1,10 @@
-const NeutralinoApp = require("node-neutralino");
-const Database = require('better-sqlite3');
+import NeutralinoApp from "node-neutralino";
+import Database from 'better-sqlite3';
 
 const app = new NeutralinoApp({
   url: "/",
   windowOptions: {
-    enableInspector: true,
+    enableInspector: false,
     minHeight: 600,
   }
 })

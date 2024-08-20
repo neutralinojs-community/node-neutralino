@@ -1,5 +1,5 @@
-const NeutralinoApp = require("node-neutralino");
-const { SerialPort } = require('serialport');
+import NeutralinoApp from "node-neutralino"
+import { SerialPort } from "serialport";
 
 const app = new NeutralinoApp({
   url: "/",
