@@ -4,7 +4,7 @@
   "description": "Test suite for node-neutralino",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "test": "cross-env SPEC=true node index.js"
   },
   "author": {
     "name": "Viral-Gupta and Neutralinojs community",
@@ -14,6 +14,7 @@
   "license": "MIT",
   "devDependencies": {
     "@neutralinojs/neu": "^11.2.0",
+    "cross-env": "^7.0.3",
     "mocha": "^10.0.0"
   }
 }

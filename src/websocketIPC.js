@@ -34,9 +34,10 @@ class WebSocketIPC {
       return;
     }
 
-    this.ws = new WS(`ws://127.0.0.1:${this.authInfo.nlPort}?extensionId=${inBuildMode() ? "js.node-neutralino.projectRunner" : "js.neutralino.devtools"}&connectToken=${this.authInfo.nlConnectToken}`);
+    this.ws = new WS(`ws://127.0.0.1:${this.authInfo.nlPort}?extensionId=${process.env.SPEC && process.env.SPEC == "true" ? "js.neutralino.devtools" : "js.node-neutralino.projectRunner"}&connectToken=${this.authInfo.nlConnectToken}`);
 
     this.ws.onerror = () => {
+      console.log("An error occurred while connecting to the Neutralino server. Please ensure that `js.node-neutralino.projectRunner` is included in the `extensions` section of the Neutralino configuration file.")
       this.retryLater(frontendLibOptions);
       return;
     };
