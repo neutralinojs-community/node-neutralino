@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "better-sqlite3": "^11.1.2",
-    "node-neutralino": "^0.0.1"
+    "node-neutralino": "^2.0.0"
   },
   "devDependencies": {
     "webpack": "^5.93.0"
